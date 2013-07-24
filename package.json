@@ -1,6 +1,6 @@
 {
-  "name": "LinvoApiClient",
-  "version": "5.0.0",
+  "name": "linvo-api4-client",
+  "version": "5.0.1",
   "dependencies": {
     "jayson": "*",
     "equals": "*",
