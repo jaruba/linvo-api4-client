@@ -76,7 +76,8 @@
 			api.request("login", { email: email, password: password }, function(err, resp)
 			{
 				if (err || !resp) return cb(err || "Unknown login error");
-					
+                
+                (typeof(api.onlogin) == "function") && api.onlogin(resp.user);
 				api.user = resp.user;
 				api.user.authKey = resp.authKey;
 				saveUser(api.user);
