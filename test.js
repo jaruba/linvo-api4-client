@@ -6,6 +6,7 @@ var api = new LinvoAPI({
 });
 
 var testCases = [
+    {"tvdb_id":79349,"name":"Dexter","episode":8,"season":7},
     {"tvdb_id":258744,"name":"The Following","episode":1,"season":1},
     {"tvdb_id":73244,"name":"The Office (US)","episode":1,"season":9}, 
     {"tvdb_id":73244,"name":"The Office (US)","episode":5,"season": 9},
