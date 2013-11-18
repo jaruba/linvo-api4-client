@@ -42,6 +42,9 @@
 			var authKey = api.user && api.user.authKey;
 			api.user && client.request("getUser", [ { authKey: authKey } ], function(err, error, remoteUser)
 			{
+                if (err) // We shouldn't reset the auth upon a network error
+                    return console.error("LinvoAPI network error", err);                
+                
 				// We don't have a valid session: flush the user object and call authenticate
 				if (! (remoteUser && remoteUser.email))
 				{
