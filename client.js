@@ -26,7 +26,7 @@ function LinvoAPI(options)
     this.user = loadUser();
     
     var api = this,
-        client = options.client || jayson.client.http({ host: api.options.host, port: api.options.port, path: "/rpc" });
+        client = api.options.client || jayson.client.http({ host: api.options.host, port: api.options.port, path: "/rpc" });
     
     // TODO: watch storePath, update on change
     
