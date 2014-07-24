@@ -67,7 +67,7 @@ function LinvoAPI(options)
     {
         client.request(method, [ extend(true, { authKey: api.user && api.user.authKey }, args) ], function(err, error, resp)
         {
-            if (err) return console.error(err);
+            if (err) return cb(err);
             (typeof(cb) == "function") && cb(error, resp);
         });
     };
