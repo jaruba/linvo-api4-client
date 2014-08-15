@@ -6,16 +6,16 @@ var jayson = require("jayson"),
 
 /* Prep: user storage; the Linvo account is tied to your system account
  */
-var storePath = path.join(process.env.APPDATA || process.env.HOME, ".linvo-user");
+LinvoAPI.storePath = path.join(process.env.APPDATA || process.env.HOME, ".linvo-user");
 function loadUser()
 {
     try {
-        return JSON.parse(fs.readFileSync(storePath));
+        return JSON.parse(fs.readFileSync(LinvoAPI.storePath));
     } catch(e) { };
 }
 function saveUser(user)
 {
-    fs.writeFile(storePath, JSON.stringify(user));
+    fs.writeFile(LinvoAPI.storePath, JSON.stringify(user));
 }
     
 /* Linvo API
