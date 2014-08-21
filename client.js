@@ -112,10 +112,8 @@ function LinvoAPI(options)
         api.request("saveUser", api.user);
         saveUser(api.user);
     };
-    
-    /* Periodically check for remote updates on the user 
-     * */
-    setInterval(function()
+
+    api.pullUser = function()
     {
         if (! api.user) return;
         
@@ -133,6 +131,10 @@ function LinvoAPI(options)
             saveUser(api.user);
             (typeof(api.options.onUserUpdate) == "function") && api.options.onUserUpdate();
         });
-    }, 10*1000);
+    };
+    
+    /* Periodically check for remote updates on the user 
+     * */
+    setInterval(function() { api.pullUser() }, 10*1000);
 };
 module.exports = LinvoAPI;
