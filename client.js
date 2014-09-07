@@ -24,6 +24,7 @@ function LinvoAPI(options)
 {
     this.options = extend({ host: "api.linvo.me", port: 80 }, options || {});
     this.user = loadUser();
+    this.connected = true;
     
     var api = this,
         client = api.options.client || jayson.client.http({ host: api.options.host, port: api.options.port, path: "/rpc" });
@@ -40,6 +41,7 @@ function LinvoAPI(options)
         var authKey = api.user && api.user.authKey;
         api.user && client.request("getUser", [ { authKey: authKey } ], function(err, error, remoteUser)
         {
+            api.connected = !err;
             if (err) // We shouldn't reset the auth upon a network error
                 return console.error("LinvoAPI network error", err);                
             
@@ -120,6 +122,8 @@ function LinvoAPI(options)
         var authKey = api.user.authKey;
         api.request("getUser", { authKey: authKey }, function(err, remoteUser)
         {
+            api.connected = !err;
+
             if (! remoteUser)
                 return console.error(err || "Unknown error while retrieving user");
 
