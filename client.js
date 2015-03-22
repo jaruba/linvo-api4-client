@@ -136,9 +136,5 @@ function LinvoAPI(options)
             (typeof(api.options.onUserUpdate) == "function") && api.options.onUserUpdate();
         });
     };
-    
-    /* Periodically check for remote updates on the user 
-     * */
-    setInterval(function() { api.pullUser() }, 10*1000);
 };
 module.exports = LinvoAPI;
