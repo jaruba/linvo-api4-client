@@ -1,5 +1,4 @@
-var jayson = require("jayson"),
-    fs = require("fs"),
+var fs = require("fs"),
     path = require("path"),
     equals = require("equals"),
     extend = require("extend");
@@ -27,7 +26,7 @@ function LinvoAPI(options)
     this.connected = true;
     
     var api = this,
-        client = api.options.client || jayson.client.http({ host: api.options.host, port: api.options.port, path: "/rpc" });
+        client = api.options.client || require("jayson").client.http({ host: api.options.host, port: api.options.port, path: "/rpc" });
     
     // TODO: watch storePath, update on change
     
