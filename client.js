@@ -10,7 +10,7 @@ function loadUser()
 {
     try {
         return JSON.parse((typeof(localStorage)!="undefined" && !module.exports.useFs) ? localStorage.linvoUser : fs.readFileSync(LinvoAPI.storePath));
-    } catch(e) { };
+    } catch(e) { console.log(e) };
 }
 function saveUser(user)
 {
