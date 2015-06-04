@@ -9,7 +9,7 @@ LinvoAPI.storePath = path.join(process.env.APPDATA || process.env.HOME || "", ".
 function loadUser()
 {
     try {
-        return JSON.parse(typeof(localStorage)!="undefined" ? localStorage.linvoUser : fs.readFileSync(LinvoAPI.storePath));
+        return JSON.parse((typeof(localStorage)!="undefined" && !module.exports.useFs) ? localStorage.linvoUser : fs.readFileSync(LinvoAPI.storePath));
     } catch(e) { };
 }
 function saveUser(user)
