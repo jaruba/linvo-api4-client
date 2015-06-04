@@ -5,7 +5,7 @@ var fs = require("fs"),
 
 /* Prep: user storage; the Linvo account is tied to your system account
  */
-LinvoAPI.storePath = path.join(process.env.APPDATA || process.env.HOME || "", ".linvo-user");
+LinvoAPI.storePath = path.join(process.env.APPDATA || process.env.HOME || module || "", ".linvo-user");
 function loadUser()
 {
     try {
@@ -14,7 +14,7 @@ function loadUser()
 }
 function saveUser(user)
 {
-    if (typeof(localStorage)!="undefined") { localStorage.linvoUser = JSON.stringify(user); return }
+    if (typeof(localStorage)!="undefined" && !module.exports.useFs) { localStorage.linvoUser = JSON.stringify(user); return }
     fs.writeFile(LinvoAPI.storePath, JSON.stringify(user));
 }
     
