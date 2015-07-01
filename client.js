@@ -41,7 +41,7 @@ function LinvoAPI(options)
         var authKey = api.user && api.user.authKey;
         api.user && client.request("getUser", [ { authKey: authKey } ], function(err, error, remoteUser)
         {
-            api.connected = !err;
+            api.connected = err ? false : true;
             if (err) // We shouldn't reset the auth upon a network error
                 return console.error("LinvoAPI network error", err);                
             
@@ -122,7 +122,7 @@ function LinvoAPI(options)
         var authKey = api.user.authKey;
         api.request("getUser", { authKey: authKey }, function(err, remoteUser)
         {
-            api.connected = !err;
+            api.connected = err ? false : true;
 
             if (! remoteUser)
                 return console.error(err || "Unknown error while retrieving user");
