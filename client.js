@@ -56,7 +56,7 @@ function LinvoAPI(options)
             var currentUser = api.user || {};
             
             if (remoteUser.lastModified < currentUser.lastModified) // local user is newer than the remote one
-                api.request("saveUser", api.user);
+                setTimeout(function() { api.request("saveUser", api.user) }, 500);
             else // remote user is newer
                 api.user = remoteUser;
             
