@@ -35,10 +35,6 @@ function proceed()
 {
     console.log("Linvo user", api.user);
     
-    var meta = {"tvdb_id":79349,"name":"Dexter","episode":12,"season":8};
-    api.request("cinematicRequest", { meta: meta }, function(err, resp)
-    {
-        console.log("cinematicQuery response", resp);
-    });
+
 }
 ```
