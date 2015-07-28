@@ -122,6 +122,8 @@ function LinvoAPI(options)
         var authKey = api.user.authKey;
         api.request("getUser", { authKey: authKey }, function(err, remoteUser)
         {
+            if (! api.user) return;
+             
             api.connected = err ? false : true;
 
             if (! remoteUser)
