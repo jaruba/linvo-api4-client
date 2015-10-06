@@ -5,7 +5,7 @@ var fs = require("fs"),
 
 /* Prep: user storage; the Linvo account is tied to your system account
  */
-LinvoAPI.storePath = path.join(process.env.APPDATA || process.env.HOME || module || "", ".linvo-user");
+LinvoAPI.storePath = path.join(process.env.APPDATA || process.env.HOME || "", ".linvo-user");
 function loadUser()
 {
     try {
