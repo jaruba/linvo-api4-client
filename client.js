@@ -116,12 +116,12 @@ function LinvoAPI(options)
         saveUser(api.user);
     };
 
-    api.pullUser = function()
+    api.pullUser = function(args)
     {
         if (! api.user) return;
         
         var authKey = api.user.authKey;
-        api.request("getUser", { authKey: authKey }, function(err, remoteUser)
+        api.request("getUser", _.extend({}, args || { }, { authKey: authKey }), function(err, remoteUser)
         {
             if (! api.user) return;
              
