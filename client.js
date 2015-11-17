@@ -1,6 +1,7 @@
 var fs = require("fs"),
     path = require("path"),
     equals = require("equals"),
+    async = require("async"),
     extend = require("extend");
 
 /* Prep: user storage; the Linvo account is tied to your system account
@@ -13,12 +14,14 @@ function loadUser()
         return str ? JSON.parse(str) : undefined;
     } catch(e) { console.log(e) };
 }
+var saveQueue = async.queue(function(task, cb) {  fs.writeFile(task.path, task.data, cb) }, 1);
 function saveUser(user)
 {
     if (typeof(localStorage)!="undefined" && !module.exports.useFs) { localStorage.linvoUser = JSON.stringify(user); return }
-    fs.writeFile(LinvoAPI.storePath, JSON.stringify(user));
+    saveQueue.push({ path: LinvoAPI.storePath, data: JSON.stringify(user)  })
 }
-    
+
+
 /* Linvo API
  */
 function LinvoAPI(options)
