@@ -1,11 +1,14 @@
 {
   "name": "linvo-api4-client",
-  "version": "6.0.4",
+  "version": "6.0.5",
   "dependencies": {
     "jayson": "*",
     "equals": "*",
     "extend": "*",
     "async": "0.2.9"
+  },
+  "scripts": {
+    "prepublish": "browserify -r ./client.js:linvo-api4-client > browser/linvo-api-client.js ; uglifyjs browser/linvo-api-client.js > browser/linvo-api-client.min.js ; git commit --allow-empty browser/linvo-api-client.js browser/linvo-api-client.min.js -m 'linvo-api-client.js update'"
   },
   "main": "client.js"
 }
