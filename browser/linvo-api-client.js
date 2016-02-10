@@ -1529,16 +1529,15 @@ process.chdir = function (dir) {
 
 },{}],"linvo-api4-client":[function(require,module,exports){
 (function (process){
-var path = require("path"),
-    equals = require("equals"),
+var equals = require("equals"),
     async = require("async"),
     extend = require("extend");
 
 /* Prep: user storage; the Linvo account is tied to your system account
  */
-LinvoAPI.storePath = path.join(process.env.APPDATA || process.env.HOME || "", ".linvo-user");
 function loadUser()
 {
+    LinvoAPI.storePath = LinvoAPI.storePath || require('path').join(process.env.APPDATA || process.env.HOME || "", ".linvo-user");
     try {
         var str = (typeof(localStorage)!="undefined" && !module.exports.useFs) ? localStorage.linvoUser : require('fs').readFileSync(LinvoAPI.storePath);
         return str ? JSON.parse(str) : undefined;
