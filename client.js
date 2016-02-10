@@ -1,5 +1,4 @@
-var fs = require("fs"),
-    path = require("path"),
+var path = require("path"),
     equals = require("equals"),
     async = require("async"),
     extend = require("extend");
@@ -10,11 +9,11 @@ LinvoAPI.storePath = path.join(process.env.APPDATA || process.env.HOME || "", ".
 function loadUser()
 {
     try {
-        var str = (typeof(localStorage)!="undefined" && !module.exports.useFs) ? localStorage.linvoUser : fs.readFileSync(LinvoAPI.storePath);
+        var str = (typeof(localStorage)!="undefined" && !module.exports.useFs) ? localStorage.linvoUser : require('fs').readFileSync(LinvoAPI.storePath);
         return str ? JSON.parse(str) : undefined;
     } catch(e) { console.log(e) };
 }
-var saveQueue = async.queue(function(task, cb) {  fs.writeFile(task.path, task.data, cb) }, 1);
+var saveQueue = async.queue(function(task, cb) {  require('fs').writeFile(task.path, task.data, cb) }, 1);
 function saveUser(user)
 {
     if (typeof(localStorage)!="undefined" && !module.exports.useFs) { localStorage.linvoUser = JSON.stringify(user); return }
