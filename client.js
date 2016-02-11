@@ -34,7 +34,7 @@ function LinvoAPI(options)
     
     // TODO: watch storePath, update on change
     
-    process.nextTick(function()
+    setTimeout(function()
     {
         /* Initialize
          */
@@ -66,7 +66,7 @@ function LinvoAPI(options)
             api.user.authKey = authKey;
             saveUser(api.user);
         });
-    });
+    }, 0);
 
     api.request = function(method, args, cb)
     {
