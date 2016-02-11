@@ -15994,9 +15994,8 @@ process.chdir = function (dir) {
 
 },{}],"linvo-api4-client":[function(require,module,exports){
 (function (process){
-var equals = require("lodash").isEqual,
-    async = require("async"),
-    extend = require("lodash").extend;
+var _ = require("lodash"),
+    async = require("async");
 
 /* Prep: user storage; the Linvo account is tied to your system account
  */
@@ -16021,7 +16020,7 @@ function saveUser(user)
  */
 function LinvoAPI(options)
 {
-    this.options = extend({ host: "api.linvo.me", port: 80 }, options || {});
+    this.options = _.extend({ host: "api.linvo.me", port: 80 }, options || {});
     this.user = loadUser();
     this.connected = true;
     
@@ -16066,7 +16065,7 @@ function LinvoAPI(options)
 
     api.request = function(method, args, cb)
     {
-        client.request(method, [ extend(true, { authKey: api.user && api.user.authKey }, args) ], function(err, error, resp)
+        client.request(method, [ _.merge({ authKey: api.user && api.user.authKey }, args) ], function(err, error, resp)
         {
             if (err) return cb && cb(err);
             (typeof(cb) == "function") && cb(error, resp);
@@ -16119,7 +16118,7 @@ function LinvoAPI(options)
         if (! api.user) return;
         
         var authKey = api.user.authKey;
-        api.request("getUser", _.extend({}, args || { }, { authKey: authKey }), function(err, remoteUser)
+        api.request("getUser", _.extend({ }, args || { }, { authKey: authKey }), function(err, remoteUser)
         {
             if (! api.user) return;
              
@@ -16128,7 +16127,7 @@ function LinvoAPI(options)
             if (! remoteUser)
                 return console.error(err || "Unknown error while retrieving user");
 
-            if (equals(remoteUser, api.user))
+            if (_.isEqual(remoteUser, api.user))
                 return;
             
             api.user = remoteUser;
