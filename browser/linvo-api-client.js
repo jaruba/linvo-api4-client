@@ -16003,7 +16003,7 @@ var equals = require("lodash").isEqual,
 if (typeof(localStorage)==="undefined") localStorage = { }; // in memory
 function loadUser()
 {
-    LinvoAPI.storePath = LinvoAPI.storePath || require('path').join(process.env.APPDATA || process.env.HOME || "", ".linvo-user");
+    if (module.exports.useFs) LinvoAPI.storePath = LinvoAPI.storePath || require('path').join(process.env.APPDATA || process.env.HOME || "", ".linvo-user");
     try {
         var str = !module.exports.useFs ? localStorage.linvoUser : require('fs').readFileSync(LinvoAPI.storePath);
         return str ? JSON.parse(str) : undefined;
