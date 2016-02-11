@@ -1,6 +1,6 @@
-var equals = require("equals"),
+var equals = require("lodash").isEqual,
     async = require("async"),
-    extend = require("extend");
+    extend = require("lodash").extend;
 
 /* Prep: user storage; the Linvo account is tied to your system account
  */
