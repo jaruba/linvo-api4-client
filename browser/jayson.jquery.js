@@ -13,7 +13,7 @@
 
     var defaults = {
       dataType: 'json',
-      type: 'POST',
+      type: 'POST', method: 'POST',
       processData: false,
       generator: generateId,
       headers: { 'Content-Type': 'application/json' }
