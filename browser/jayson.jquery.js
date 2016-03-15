@@ -14,7 +14,6 @@
     var defaults = {
       dataType: 'json',
       type: 'POST', method: 'POST',
-      processData: false,
       generator: generateId,
       headers: { 'Content-Type': 'application/json' }
     };
@@ -37,48 +36,18 @@
     }
 
     // wrap around the error and success callbacks for post-processing
-    var options = $.extend({}, this.options, {
-      error: function(xhr, status, error) { callback($.makeArray(arguments)); },
-      success: function(data, status, xhr) { 
-        callback(null, data.error, data.result);
-      }
-    });
+    var options = $.extend({}, this.options);
     try {
       var request = generateRequest(method, params, id);
-      options.data = options.processData ? request : JSON.stringify(request);
+      options.data = JSON.stringify(request);
     } catch(error) {
       return callback(error);
     }
-    $.ajax(options);
-  };
-
-  /**
-   * Expose the client as a jQuery extension
-   * @ignore
-   */
-  $.fn.jayson = function(options) {
-    options = options || {};
-    var client = new JqueryClient(options);
-    client.request(options.method, options.params, options.id, {generator: options.generator}, function(err, data) {
-      if(err) {
-        if($.isFunction(options.error)) {
-          return options.error.apply(options.error, err);
-        } else {
-          return; // do nothing, no error handlers provided
-        }
-      }
-
-      if($.isFunction(options.response)) {
-        if(options.response.length === 2) {
-          data.error ? options.response(data.error) : options.response(null, data.result);
-        } else {
-          options.response(data);
-        }
-      } else {
-        return; // do nothing, no response handler provided
-      }
-    });
-    return this;
+    
+    fetch(options.url, { method: "POST", body: options.data, headers: options.headers })
+    .then(function(resp) { return resp.json() })
+    .then(function(body) { callback(null, body.error, body.result) })
+    .catch(function(err) { callback(err) })
   };
 
   /**
