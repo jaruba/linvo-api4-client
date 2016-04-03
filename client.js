@@ -25,7 +25,11 @@ function saveUser(user)
 function LinvoAPI(options)
 {
     this.options = _.extend({ host: "api.linvo.me", port: 80 }, options || {});
-    this.user = loadUser();
+
+    var load = loadUser || options.loadUser;
+    var save = saveUser || options.saveUser;
+    
+    this.user = load();
     this.connected = true;
     
     var api = this,
@@ -50,7 +54,7 @@ function LinvoAPI(options)
             // We don't have a valid session: flush the user object and call authenticate
             if (! (remoteUser && remoteUser.email))
             {
-                saveUser(api.user = null);
+                save(api.user = null);
                 (typeof(api.options.authenticate) == "function") && api.options.authenticate();
                 return;
             }
@@ -63,7 +67,7 @@ function LinvoAPI(options)
                 api.user = remoteUser;
             
             api.user.authKey = authKey;
-            saveUser(api.user);
+            save(api.user);
         });
     }, 0);
 
@@ -85,7 +89,7 @@ function LinvoAPI(options)
             (typeof(api.onlogin) == "function") && api.onlogin(resp.user);
             api.user = resp.user;
             api.user.authKey = resp.authKey;
-            saveUser(api.user);
+            save(api.user);
             cb(null, { user: resp.user });				
         });
     };
@@ -97,13 +101,13 @@ function LinvoAPI(options)
                 
             api.user = resp.user;
             api.user.authKey = resp.authKey;
-            saveUser(api.user);
+            save(api.user);
             cb(null, { user: resp.user });				
         });
     };
     api.logout = function(cb)
     {
-        saveUser(api.user = null);
+        save(api.user = null);
         api.request("logout", { }, cb);
     }
 
@@ -114,7 +118,7 @@ function LinvoAPI(options)
     {
         api.user.lastModified = Date.now();
         api.request("saveUser", api.user);
-        saveUser(api.user);
+        save(api.user);
     };
 
     api.pullUser = function(args)
@@ -136,7 +140,7 @@ function LinvoAPI(options)
             
             api.user = remoteUser;
             api.user.authKey = authKey;
-            saveUser(api.user);
+            save(api.user);
             (typeof(api.options.onUserUpdate) == "function") && api.options.onUserUpdate();
         });
     };
