@@ -68,6 +68,7 @@ function LinvoAPI(options)
             
             api.user.authKey = authKey;
             save(api.user);
+            (typeof(api.options.onUserUpdate) == "function") && api.options.onUserUpdate();
         });
     }, 0);
 
