@@ -26,8 +26,8 @@ function LinvoAPI(options)
 {
     this.options = _.extend({ host: "api.linvo.me", port: 80 }, options || {});
 
-    var load = loadUser || options.loadUser;
-    var save = saveUser || options.saveUser;
+    var load = options.loadUser || loadUser;
+    var save = options.saveUser || saveUser;
     
     this.user = load();
     this.connected = true;
