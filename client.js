@@ -91,7 +91,8 @@ function LinvoAPI(options)
             api.user = resp.user;
             api.user.authKey = resp.authKey;
             save(api.user);
-            cb(null, { user: resp.user });				
+            (typeof(api.options.onUserUpdate) == "function") && api.options.onUserUpdate();
+            cb(null, { user: resp.user });
         });
     };
     api.register = function(user, cb)
@@ -103,6 +104,7 @@ function LinvoAPI(options)
             api.user = resp.user;
             api.user.authKey = resp.authKey;
             save(api.user);
+            (typeof(api.options.onUserUpdate) == "function") && api.options.onUserUpdate();
             cb(null, { user: resp.user });				
         });
     };
