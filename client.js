@@ -68,7 +68,7 @@ function LinvoAPI(options)
             
             api.user.authKey = authKey;
             save(api.user);
-            (typeof(api.options.onUserUpdate) == "function") && api.options.onUserUpdate();
+            if (typeof(api.options.onUserUpdate) == "function") api.options.onUserUpdate();
         });
     }, 0);
 
@@ -87,11 +87,11 @@ function LinvoAPI(options)
         {
             if (err || !resp) return cb(err || "Unknown login error");
             
-            (typeof(api.onlogin) == "function") && api.onlogin(resp.user);
+            if (typeof(api.onlogin) == "function") api.onlogin(resp.user);
             api.user = resp.user;
             api.user.authKey = resp.authKey;
             save(api.user);
-            (typeof(api.options.onUserUpdate) == "function") && api.options.onUserUpdate();
+            if (typeof(api.options.onUserUpdate) == "function") api.options.onUserUpdate();
             cb(null, { user: resp.user });
         });
     };
@@ -104,8 +104,8 @@ function LinvoAPI(options)
             api.user = resp.user;
             api.user.authKey = resp.authKey;
             save(api.user);
-            (typeof(api.options.onUserUpdate) == "function") && api.options.onUserUpdate();
-            cb(null, { user: resp.user });				
+            if (typeof(api.options.onUserUpdate) == "function") api.options.onUserUpdate();
+            cb(null, { user: resp.user });
         });
     };
     api.logout = function(cb)
@@ -144,7 +144,7 @@ function LinvoAPI(options)
             api.user = remoteUser;
             api.user.authKey = authKey;
             save(api.user);
-            (typeof(api.options.onUserUpdate) == "function") && api.options.onUserUpdate();
+            if (typeof(api.options.onUserUpdate) == "function") api.options.onUserUpdate();
         });
     };
 };
