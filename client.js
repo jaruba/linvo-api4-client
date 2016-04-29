@@ -1,5 +1,6 @@
 var _ = require("lodash"),
-    async = require("async");
+    async = require("async"),
+    EventEmitter = require("events").EventEmitter;
 
 /* Prep: user storage; the Linvo account is tied to your system account
  */
@@ -31,6 +32,7 @@ function LinvoAPI(options)
     
     this.user = load();
     this.connected = true;
+    this.events = new EventEmitter();
     
     var api = this,
         client = api.options.client || require("jayson").client.http({ host: api.options.host, port: api.options.port, path: "/rpc" });
@@ -76,7 +78,7 @@ function LinvoAPI(options)
     {
         client.request(method, [ _.merge({ authKey: api.user && api.user.authKey }, args) ], function(err, error, resp)
         {
-            if (err) return cb && cb(err);
+            if (err) return api.events.emit('error') && cb && cb(err);
             (typeof(cb) == "function") && cb(error, resp);
         });
     };
